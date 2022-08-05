@@ -153,11 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vectorOne:
-    x: 14
-    y: 7
+    x: -3
+    y: 3
   vectorTwo:
-    x: -5
-    y: 7
+    x: 3
+    y: 3
+  range: 1
 --- !u!4 &438047115
 Transform:
   m_ObjectHideFlags: 0
