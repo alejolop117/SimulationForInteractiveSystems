@@ -25,9 +25,8 @@ public class Gargantua : MonoBehaviour
 
     void Update()
     {
-        position.Draw(Color.black);
-        velocity.Draw(position, Color.blue); //Pos para q no dibuje desde V0 sino desde el vector.
-        accelaration.Draw(position, Color.green);
+      
+        accelaration.Draw(position, Color.red);
 
         MyVector2D myPos = new MyVector2D(transform.position.x, transform.position.y);
         MyVector2D gargantuaPos = new MyVector2D(gargantuaLocator.position.x, gargantuaLocator.position.y);
