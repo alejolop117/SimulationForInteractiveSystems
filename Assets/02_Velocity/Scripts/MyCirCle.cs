@@ -31,7 +31,7 @@ public class MyCirCle : MonoBehaviour
     void Update()
     {
         position.Draw(Color.black);
-        velocity.Draw(position, Color.red);
+        velocity.Draw(position, Color.red); //Pos para q no dibuje desde V0 sino desde el vector.
         aceleration.Draw(position, Color.green);
 
         if (Input.GetKeyDown(KeyCode.Space)) { // Cambiar la dirección de la aceleración.
@@ -51,25 +51,25 @@ public class MyCirCle : MonoBehaviour
         if (position.x > mycamera.orthographicSize) { 
             velocity.x *= -1; //Para cambiar la dirección
             position.x = mycamera.orthographicSize; //re ubica al objeto en el límite de la cámara.
-            velocity *= 0.9f; //damping factor
+            velocity *= dampingFactor; 
         }
 
         else if(position.x < -mycamera.orthographicSize) {
             velocity.x *= -1;
             position.x = -mycamera.orthographicSize;
-            velocity *= 0.9f; //damping factor
+            velocity *= dampingFactor; 
         }
 
         else if (position.y > mycamera.orthographicSize) {
             velocity.y *= -1;
             position.y = mycamera.orthographicSize;
-            velocity *= 0.9f; //damping factor
+            velocity *= dampingFactor; 
         }
 
         else if (position.y < -mycamera.orthographicSize) {
             velocity.y *= -1;
             position.y = -mycamera.orthographicSize;
-            velocity *= 0.9f; //damping factor
+            velocity *= dampingFactor; 
         }
 
         

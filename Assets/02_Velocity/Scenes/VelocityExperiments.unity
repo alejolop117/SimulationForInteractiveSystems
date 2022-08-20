@@ -160,7 +160,7 @@ MonoBehaviour:
   velocity:
     x: 0
     y: 0
-  dampingFactor: 0.9
+  dampingFactor: 1
 --- !u!212 &225676286
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -538,7 +538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &727362455
 SpriteRenderer:
   m_ObjectHideFlags: 0
