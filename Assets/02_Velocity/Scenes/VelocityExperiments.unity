@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 727362456}
   - component: {fileID: 727362455}
   m_Layer: 0
-  m_Name: Gargatua
+  m_Name: Gargantua
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
