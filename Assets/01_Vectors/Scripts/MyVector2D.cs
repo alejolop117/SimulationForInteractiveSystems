@@ -50,6 +50,10 @@ public struct MyVector2D { //Se puede usar Class o Struct
         return new MyVector2D(x * a.x, y * a.y);
     }
 
+    public static MyVector2D operator /(MyVector2D a, float b) {
+        return new MyVector2D(a.x / b, a.y / b);
+    }
+
     public override string ToString() {
 
         return $"[{x}, {y}]";  //TO convert our data on text.
