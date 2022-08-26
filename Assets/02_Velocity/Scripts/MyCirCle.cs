@@ -20,7 +20,6 @@ public class MyCirCle : MonoBehaviour
     void Start()
     {
         position = new MyVector2D(transform.position.x, transform.position.y);
-
     }
 
     private void FixedUpdate() {

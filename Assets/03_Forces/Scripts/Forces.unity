@@ -769,7 +769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mycamera: {fileID: 1115497020}
-  aceleration:
+  acceleration:
     x: 0
     y: 0
   velocity:
@@ -780,6 +780,7 @@ MonoBehaviour:
     y: -9.8
   mass: 800
   dampingFactor: 1
+  kFriction: 0.8
   wind:
     x: 0
     y: 0

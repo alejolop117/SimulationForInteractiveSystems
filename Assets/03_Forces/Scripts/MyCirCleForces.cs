@@ -5,18 +5,18 @@ using UnityEngine;
 public class MyCirCleForces : MonoBehaviour
 {
     [SerializeField] Camera mycamera;
-    [SerializeField] MyVector2D  aceleration;
+    [SerializeField] MyVector2D  acceleration;
     [SerializeField] MyVector2D velocity;
     [SerializeField] MyVector2D force;
     [SerializeField] float mass = 1f;
     [SerializeField, Range(0.0f, 1.0f)] float dampingFactor = 0.9f;
+    [SerializeField, Range(0.0f, 1.0f)] float kFriction = 1f;
     MyVector2D position;
     MyVector2D weight;
 
     [Header ("Forces")]
     [SerializeField] MyVector2D wind;
     [SerializeField] MyVector2D gravity;
-    MyVector2D netForce;
 
     void Start()
     {
@@ -26,10 +26,20 @@ public class MyCirCleForces : MonoBehaviour
 
     private void FixedUpdate() {
         //netForce = new MyVector2D(0, 0);
-        aceleration = new MyVector2D(0, 0); // Para q no se acumulen las Fuerzas
+        acceleration = new MyVector2D(0, 0); // Para q no se acumulen las Fuerzas -> Reset acc.
+        
+        // Peso
         weight = mass * gravity;
-        ApplyForce(wind);
         ApplyForce(weight);
+
+        //Aire
+        ApplyForce(wind);
+
+        //Fricción
+        MyVector2D friction = -kFriction * weight.magnitude * velocity.normalized;
+        ApplyForce(friction);
+        friction.Draw(position, Color.cyan);
+
         Move();
     }
 
@@ -38,13 +48,14 @@ public class MyCirCleForces : MonoBehaviour
     {
         position.Draw(Color.black);
         velocity.Draw(position, Color.red); //Pos para q no dibuje desde V0 sino desde el vector.
-        aceleration.Draw(position, Color.green);
+        acceleration.Draw(position, Color.green);
+
         
     }
 
     public void Move() {
 
-        velocity = velocity + aceleration * Time.fixedDeltaTime;
+        velocity = velocity + acceleration * Time.fixedDeltaTime;
         position = position + velocity * Time.fixedDeltaTime; // Time.deltaTime(1 s/ x FPS)
 
 
@@ -78,7 +89,7 @@ public class MyCirCleForces : MonoBehaviour
         transform.position = new Vector3(position.x, position.y);
     }
 
-    private void ApplyForce(MyVector2D force) { //7:04 y 7:33
-        aceleration += force / mass;
+    private void ApplyForce(MyVector2D force) { 
+        acceleration += force / mass;
     }
 }

@@ -10,6 +10,18 @@ public struct MyVector2D { //Se puede usar Class o Struct
     public float x;
     public float y;
 
+    public float magnitude => Mathf.Sqrt(x * x + y * y);
+    //public MyVector2D normalized => new MyVector2D(x / magnitude, y / magnitude);
+    // public MyVector2D normalized => this / magnitude; // Versión alterna
+
+    public MyVector2D normalized {
+        get {
+            float m = magnitude;
+            if (m <= 0.0001f) return new MyVector2D(0, 0); // Evitar dividir entre 0
+            return new MyVector2D(x / m, y / m);
+        }
+    }
+
     public MyVector2D(float x, float y) {
         this.x = x;
         this.y = y;
@@ -69,6 +81,15 @@ public struct MyVector2D { //Se puede usar Class o Struct
         Vector3 end = new Vector3(newOrigin.x + x, newOrigin.y + y);
         Debug.DrawLine(start, end, color);
             
+    }
+
+    public void Normalize() {
+        // x = x / magnitude; y = y / magnitude; Versión alterna explícita.
+        // float.Epsilon es el # float más pequeño. 
+        float tolerance = 0.0001f; // Evita generar resultados muy grandes en la /
+        float m = magnitude;
+        if (m <= tolerance) return;
+        x /= m; y /= m;
     }
 
 }
