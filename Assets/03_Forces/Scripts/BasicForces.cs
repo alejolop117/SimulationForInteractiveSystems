@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyCirCleForces : MonoBehaviour
+public class BasicForces : MonoBehaviour
 {
     [SerializeField] Camera mycamera;
     [SerializeField] MyVector2D  acceleration;
     [SerializeField] MyVector2D velocity;
-    [SerializeField] MyVector2D force;
+    //[SerializeField] MyVector2D force;
     [SerializeField] float mass = 1f;
     [SerializeField, Range(0.0f, 1.0f)] float dampingFactor = 0.9f;
     [SerializeField, Range(0.0f, 1.0f)] float kFriction = 1f;
@@ -36,7 +36,7 @@ public class MyCirCleForces : MonoBehaviour
         ApplyForce(wind);
 
         //Fricción
-        MyVector2D friction = -kFriction * weight.magnitude * velocity.normalized;
+        MyVector2D friction = -kFriction * weight.magnitude * velocity.normalized; //Ley de fricción
         ApplyForce(friction);
         friction.Draw(position, Color.cyan);
 
