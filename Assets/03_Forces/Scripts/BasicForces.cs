@@ -8,10 +8,10 @@ public class BasicForces : MonoBehaviour
     [SerializeField] MyVector2D  acceleration;
     [SerializeField] MyVector2D velocity;
     //[SerializeField] MyVector2D force;
-    [SerializeField] float mass = 1f;
+    public float mass = 1f;
     [SerializeField, Range(0.0f, 1.0f)] float dampingFactor = 0.9f;
     [SerializeField, Range(0.0f, 1.0f)] float kFriction = 1f;
-    MyVector2D position;
+    public MyVector2D position;
     MyVector2D weight;
 
     [Header ("Forces")]

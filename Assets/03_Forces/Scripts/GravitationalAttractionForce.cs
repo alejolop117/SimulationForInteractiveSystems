@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FluidFriction : MonoBehaviour
+public class GravitationalAttractionForce : MonoBehaviour
 {
     [SerializeField] Camera mycamera;
     [SerializeField] MyVector2D  acceleration;
     [SerializeField] MyVector2D velocity;
-    public float mass = 1f;
-    [SerializeField] float rho = 1; //Densidad
-    [SerializeField] float fluidDragK = 1; //Coeficiente de Fricción
-    [SerializeField, Range(0.0f, 1.0f)] float dampingFactor = 0.9f;
+    //[SerializeField] MyVector2D force;
+    [SerializeField] float mass = 1f;
+    [SerializeField] GravitationalAttractionForce planetTwo;
+    [SerializeField, Range(0.0f, 1.0f)] float dampingFactor = 0.0f;
     public MyVector2D position;
     MyVector2D weight;
 
@@ -21,18 +21,20 @@ public class FluidFriction : MonoBehaviour
     void Start()
     {
         position = new MyVector2D(transform.position.x, transform.position.y);
+
     }
 
     private void FixedUpdate() {
         //netForce = new MyVector2D(0, 0);
         acceleration = new MyVector2D(0, 0); // Para q no se acumulen las Fuerzas -> Reset acc.
+        
         // Peso
         weight = mass * gravity;
         ApplyForce(weight);
+
         //Aire
         ApplyForce(wind);
 
-        ApplyFluidFriction();
 
         Move();
     }
@@ -43,6 +45,8 @@ public class FluidFriction : MonoBehaviour
         position.Draw(Color.black);
         velocity.Draw(position, Color.red); //Pos para q no dibuje desde V0 sino desde el vector.
         acceleration.Draw(position, Color.green);
+
+        
     }
 
     public void Move() {
@@ -50,6 +54,7 @@ public class FluidFriction : MonoBehaviour
         velocity = velocity + acceleration * Time.fixedDeltaTime;
         position = position + velocity * Time.fixedDeltaTime; // Time.deltaTime(1 s/ x FPS)
 
+        if (velocity.magnitude >= 10) velocity = 10f * velocity.normalized;
 
         // Evita que el objeto se salga de los límites de la cámara.
         if (position.x > mycamera.orthographicSize) { 
@@ -75,6 +80,9 @@ public class FluidFriction : MonoBehaviour
             position.y = -mycamera.orthographicSize;
             velocity *= dampingFactor; 
         }
+
+        
+
         transform.position = new Vector3(position.x, position.y);
     }
 
@@ -82,13 +90,9 @@ public class FluidFriction : MonoBehaviour
         acceleration += force / mass;
     }
 
-    private void ApplyFluidFriction() {
-        if (transform.localPosition.y <= 0) {
-            float frontalArea = transform.localScale.x; // SOLO Por que coincide con la escala del mundo
-            float velocityMagnitude = velocity.magnitude;
-            float scalarPart = -0.5f * rho * velocityMagnitude * velocityMagnitude * frontalArea * fluidDragK;
-            MyVector2D frictionF = scalarPart * velocity.normalized;
-            ApplyForce(frictionF);
-        }
+    private MyVector2D AttractionForce() {
+        MyVector2D r = planetTwo.position - position; // r: distancia que separa las masas
+        MyVector2D g = (mass - planetTwo.mass) / Mathf.Pow(r.magnitude, 2) * r.normalized;
+        return g;
     }
 }
