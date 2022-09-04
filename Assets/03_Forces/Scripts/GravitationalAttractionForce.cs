@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class GravitationalAttractionForce : MonoBehaviour
 {
-    [SerializeField] Camera mycamera;
+
+    [Header("Components")]
     [SerializeField] MyVector2D  acceleration;
     [SerializeField] MyVector2D velocity;
-    //[SerializeField] MyVector2D force;
-    [SerializeField] float mass = 1f;
-    [SerializeField] GravitationalAttractionForce planetTwo;
-    [SerializeField, Range(0.0f, 1.0f)] float dampingFactor = 0.0f;
     public MyVector2D position;
-    MyVector2D weight;
+    [SerializeField] float mass = 1f;
 
-    [Header ("Forces")]
-    [SerializeField] MyVector2D wind;
-    [SerializeField] MyVector2D gravity;
+    [SerializeField] GravitationalAttractionForce planetTwo;
 
     void Start()
     {
@@ -27,14 +22,8 @@ public class GravitationalAttractionForce : MonoBehaviour
     private void FixedUpdate() {
         //netForce = new MyVector2D(0, 0);
         acceleration = new MyVector2D(0, 0); // Para q no se acumulen las Fuerzas -> Reset acc.
-        
-        // Peso
-        weight = mass * gravity;
-        ApplyForce(weight);
 
-        //Aire
-        ApplyForce(wind);
-
+        ApplyForce(AttractionForce());
 
         Move();
     }
@@ -54,35 +43,10 @@ public class GravitationalAttractionForce : MonoBehaviour
         velocity = velocity + acceleration * Time.fixedDeltaTime;
         position = position + velocity * Time.fixedDeltaTime; // Time.deltaTime(1 s/ x FPS)
 
-        if (velocity.magnitude >= 10) velocity = 10f * velocity.normalized;
-
-        // Evita que el objeto se salga de los límites de la cámara.
-        if (position.x > mycamera.orthographicSize) { 
-            velocity.x *= -1; //Para cambiar la dirección
-            position.x = mycamera.orthographicSize; //re ubica al objeto en el límite de la cámara.
-            velocity *= dampingFactor; 
+        if(velocity.magnitude >= 10f) {
+            velocity.Normalize();
+            velocity *= 10;
         }
-
-        else if(position.x < -mycamera.orthographicSize) {
-            velocity.x *= -1;
-            position.x = -mycamera.orthographicSize;
-            velocity *= dampingFactor; 
-        }
-
-        else if (position.y > mycamera.orthographicSize) {
-            velocity.y *= -1;
-            position.y = mycamera.orthographicSize;
-            velocity *= dampingFactor; 
-        }
-
-        else if (position.y < -mycamera.orthographicSize) {
-            velocity.y *= -1;
-            position.y = -mycamera.orthographicSize;
-            velocity *= dampingFactor; 
-        }
-
-        
-
         transform.position = new Vector3(position.x, position.y);
     }
 
@@ -92,7 +56,10 @@ public class GravitationalAttractionForce : MonoBehaviour
 
     private MyVector2D AttractionForce() {
         MyVector2D r = planetTwo.position - position; // r: distancia que separa las masas
-        MyVector2D g = (mass - planetTwo.mass) / Mathf.Pow(r.magnitude, 2) * r.normalized;
-        return g;
+        float rMagnitude = r.magnitude; // En la ecuación, es la magnitud de ese V^2
+        MyVector2D f = r.normalized * (planetTwo.mass * mass / rMagnitude * rMagnitude); // Fg = Ur * ((m1*m2/r^2)
+        // r.normalized, es un vector unitario que posee la misma dirección de actuación de la fuerza aunque de sentido contrario
+        // r.normalized = Ur
+        return f;
     }
 }
