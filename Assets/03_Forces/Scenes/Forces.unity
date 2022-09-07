@@ -268,6 +268,9 @@ MonoBehaviour:
   rho: 4
   fluidDragK: 1
   dampingFactor: 0
+  position:
+    x: 0
+    y: 0
   wind:
     x: 0
     y: 0
@@ -447,6 +450,9 @@ MonoBehaviour:
   rho: 20
   fluidDragK: 1
   dampingFactor: 0
+  position:
+    x: 0
+    y: 0
   wind:
     x: 0
     y: 0
@@ -649,11 +655,14 @@ MonoBehaviour:
   velocity:
     x: 0
     y: 0
-  mass: 100
+  mass: 25
   dampingFactor: 1
   kFriction: 0.8
+  position:
+    x: 0
+    y: 0
   wind:
-    x: 0.03
+    x: 20
     y: 0
   gravity:
     x: 0
@@ -1199,9 +1208,12 @@ MonoBehaviour:
   mass: 800
   dampingFactor: 1
   kFriction: 0.8
-  wind:
-    x: 0.03
+  position:
+    x: 0
     y: 0
+  wind:
+    x: 5
+    y: 6
   gravity:
     x: 0
     y: -9.8
