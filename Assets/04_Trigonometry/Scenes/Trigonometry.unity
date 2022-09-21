@@ -152,10 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7414c1fef8f05f4bbf156837db43066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 2
-  angleDeg: 30
-  angleDegSpeed: 5
-  radiusSpeed: 0.5
+  myCam: {fileID: 1115497020}
+  radius: 3
+  angleDeg: 50
+  angleDegSpeed: 30
+  radiusSpeed: 5
   radiusLimitCam: 5
   objectTarget: {fileID: 1273468396}
 --- !u!4 &455831763

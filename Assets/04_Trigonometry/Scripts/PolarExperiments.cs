@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class PolarExperiments : MonoBehaviour
 {
+    [SerializeField] Camera myCam;
     [SerializeField] float radius;
     [SerializeField] float angleDeg;
     [SerializeField] float angleDegSpeed = 0.1f;
     [SerializeField] float radiusSpeed = 0.001f;
     [SerializeField] float radiusLimitCam = 5f;
     [SerializeField] Transform objectTarget;
-   
+
+    /* Perfect circle values:
+     radius = 0, angleDeg = 0, angleDegSpeed = 180, radiusSpeed = 0.1
+    Flower values:
+    radius = 3, angleDeg = 50, angleDegSpeed = 30, radiusSpeed = 5
+     */
     void Start()
     {
         Assert.IsNotNull(objectTarget, " Object Target is requiered");
@@ -40,7 +46,8 @@ public class PolarExperiments : MonoBehaviour
 
     private void LimitsCamera() {
 
-        if(radius >= radiusLimitCam) {
+        if(Mathf.Abs(radius) >= myCam.orthographicSize) {
+            
             radiusSpeed *= -1;
         }
     }
