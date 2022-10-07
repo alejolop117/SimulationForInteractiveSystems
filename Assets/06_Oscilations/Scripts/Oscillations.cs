@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Oscillations : MonoBehaviour
 {
-    enum OscilationMode { horizontal, vertical, diagonal, chaos }
-    [SerializeField] OscilationMode oscilationMode;
+    enum OscillationMode { horizontal, vertical, diagonal, chaos1, chaos2, chaos3 }
+
+    [SerializeField] OscillationMode oscilationMode;
     [SerializeField] float amplitude = 1;
     [SerializeField] float period = 1;
     Vector3 initialPos;
@@ -17,18 +18,25 @@ public class Oscillations : MonoBehaviour
 
     void Update()
     {
-        if(oscilationMode == OscilationMode.diagonal) {
+        if(oscilationMode == OscillationMode.diagonal) {
             DiagonalOscillation();
         }
-        else if(oscilationMode == OscilationMode.chaos) {
+        else if(oscilationMode == OscillationMode.chaos1) {
             ChaosOscillation();
         }
+        else if (oscilationMode == OscillationMode.chaos2) {
+            ChaosOscillation2();
+        }
 
-        else if (oscilationMode == OscilationMode.horizontal) {
+        else if (oscilationMode == OscillationMode.chaos3) {
+            ChaosOscillation3();
+        }
+
+        else if (oscilationMode == OscillationMode.horizontal) {
             HorizontalOscillation();
         }
 
-        else if (oscilationMode == OscilationMode.vertical) {
+        else if (oscilationMode == OscillationMode.vertical) {
             VerticalOscillation();
         }
     }
@@ -51,5 +59,17 @@ public class Oscillations : MonoBehaviour
         float x = Mathf.Sin(Time.time) + Mathf.Sin(2*Time.time) + Mathf.Sin(4*Time.time)+Mathf.Cos(3*Time.time)+
             Mathf.Cos(10 * Time.time); //Comportamiento random
         transform.position = initialPos + new Vector3(x, 0, 0); // Solo en x
+    }
+
+    void ChaosOscillation2() {
+        float x = Mathf.Cos(Time.time) + Mathf.Tan(2 * Time.time) + Mathf.Cos(4 * Time.time) + Mathf.Sin(3 * Time.time) +
+            Mathf.Sin(10 * Time.time); //Comportamiento random
+        transform.position = initialPos + new Vector3(x, 0, 0); // Solo en x
+    }
+
+    void ChaosOscillation3() {
+        float x = Mathf.Sin(Time.time)  + Mathf.Cos(4 * Time.time) + Mathf.Cos(3 * Time.time) +
+            Mathf.Cos(10 * Time.time) + Mathf.Tan(3 * Time.time); //Comportamiento random
+        transform.position = initialPos + new Vector3(x, x, 0); // Solo en x
     }
 }
