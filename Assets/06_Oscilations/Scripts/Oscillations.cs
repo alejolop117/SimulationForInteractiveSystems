@@ -69,7 +69,7 @@ public class Oscillations : MonoBehaviour
 
     void ChaosOscillation3() {
         float x = Mathf.Sin(Time.time)  + Mathf.Cos(4 * Time.time) + Mathf.Cos(3 * Time.time) +
-            Mathf.Cos(10 * Time.time) + Mathf.Tan(3 * Time.time); //Comportamiento random
+            Mathf.Cos(10 * Time.time) + Mathf.Sin(15 * Time.time); //Comportamiento random
         transform.position = initialPos + new Vector3(x, x, 0); // Solo en x
     }
 }
